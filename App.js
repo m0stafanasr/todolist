@@ -1,20 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-
+import { StatusBar, Text, View } from 'react-native';
+import CrntTodo from './components/crntTodo';
+import Todo from './components/Todo';
+import { styles } from './styles';
+import { useState } from 'react';
 export default function App() {
+
+
+  const [Ttodo,setTodo]= useState([
+
+  ])
+  const addingHandler=(obj)=>{
+    setTodo([obj,...Ttodo]);
+  }
+
+    const changeStat=(todo)=>{
+      let update = Ttodo.map((i) => {
+        if (i === todo) {
+          i.done = !i.done;
+        }
+        return i;
+      });
+      setTodo(update)
+    }
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <StatusBar hidden />
+      <Todo todoAdd={addingHandler} />
+      <CrntTodo list={Ttodo} changeStat={changeStat}/>
+      
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
